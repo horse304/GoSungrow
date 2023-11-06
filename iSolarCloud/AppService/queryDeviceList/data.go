@@ -36,10 +36,11 @@ type ResultData struct {
 		WarningCount valueTypes.Count `json:"warning_count" PointId:"warning_count" PointUpdateFreq:"UpdateFreqTotal"`
 	} `json:"dev_count_by_status_map" PointId:"device_status_count"`
 	DevCountByTypeMap map[string]valueTypes.Integer `json:"dev_count_by_type_map" PointId:"device_type_count" PointUpdateFreq:"UpdateFreqBoot"`
-	DevTypeDefinition map[string]valueTypes.String `json:"dev_type_definition" PointId:"device_types" PointUpdateFreq:"UpdateFreqBoot"`	// DataTable:"true"`
+	DevTypeDefinition map[string]valueTypes.String  `json:"dev_type_definition" PointId:"device_types" PointUpdateFreq:"UpdateFreqBoot"` // DataTable:"true"`
 
 	RowCount valueTypes.Integer `json:"rowCount" PointId:"row_count"`
 }
+
 // DevCountByTypeMap struct {
 // 	One4 valueTypes.Integer `json:"14"`
 // 	Two2 valueTypes.Integer `json:"22"`
@@ -96,14 +97,14 @@ type ResultData struct {
 // } `json:"dev_type_definition"`
 
 type Device struct {
-	GoStruct                GoStruct.GoStruct  `json:"-" PointIdFrom:"PsKey" PointIdReplace:"true" PointDeviceFrom:"PsKey"`
+	GoStruct GoStruct.GoStruct `json:"-" PointIdFrom:"PsKey" PointIdReplace:"true" PointDeviceFrom:"PsKey"`
 
-	PsKey                   valueTypes.PsKey   `json:"ps_key" PointId:"ps_key" PointUpdateFreq:"UpdateFreqBoot"`
-	PsId                    valueTypes.PsId    `json:"ps_id" PointId:"ps_id" PointUpdateFreq:"UpdateFreqBoot"`
-	DeviceType              valueTypes.Integer `json:"device_type" PointId:"device_type" PointUpdateFreq:"UpdateFreqBoot"`
-	DeviceCode              valueTypes.Integer `json:"device_code" PointId:"device_code" PointUpdateFreq:"UpdateFreqBoot"`
-	ChannelId               valueTypes.Integer `json:"chnnl_id" PointId:"channel_id" PointUpdateFreq:"UpdateFreqBoot"`
-	Sn                      valueTypes.String  `json:"sn" PointId:"sn" PointName:"Serial Number" PointUpdateFreq:"UpdateFreqBoot"`
+	PsKey      valueTypes.PsKey   `json:"ps_key" PointId:"ps_key" PointUpdateFreq:"UpdateFreqBoot"`
+	PsId       valueTypes.PsId    `json:"ps_id" PointId:"ps_id" PointUpdateFreq:"UpdateFreqBoot"`
+	DeviceType valueTypes.Integer `json:"device_type" PointId:"device_type" PointUpdateFreq:"UpdateFreqBoot"`
+	DeviceCode valueTypes.Integer `json:"device_code" PointId:"device_code" PointUpdateFreq:"UpdateFreqBoot"`
+	ChannelId  valueTypes.Integer `json:"chnnl_id" PointId:"channel_id" PointUpdateFreq:"UpdateFreqBoot"`
+	Sn         valueTypes.String  `json:"sn" PointId:"sn" PointName:"Serial Number" PointUpdateFreq:"UpdateFreqBoot"`
 
 	AlarmCount              valueTypes.Count   `json:"alarm_count" PointId:"alarm_count" PointUpdateFreq:"UpdateFreqTotal"`
 	CommandStatus           valueTypes.Integer `json:"command_status" PointId:"command_status" PointUpdateFreq:"UpdateFreqInstant"`
@@ -141,29 +142,29 @@ type Device struct {
 	UUID                    valueTypes.Integer `json:"uuid" PointId:"uuid" PointUpdateFreq:"UpdateFreqBoot"`                       // Referenced by DeviceArea
 	UUIDIndexCode           valueTypes.String  `json:"uuid_index_code" PointId:"uuid_index_code" PointUpdateFreq:"UpdateFreqBoot"` // Referenced by DeviceArea
 
-	PointData               []PointStruct      `json:"point_data" PointId:"data" PointIdReplace:"true" DataTable:"true"`	// PointIdFromChild:"PointId" PointIdReplace:"true" PointId:"data" DataTable:"true"`
-	PsTimezoneInfo          struct {
+	PointData      []PointStruct `json:"point_data" PointId:"data" PointIdReplace:"true" DataTable:"true"` // PointIdFromChild:"PointId" PointIdReplace:"true" PointId:"data" DataTable:"true"`
+	PsTimezoneInfo struct {
 		IsDst    valueTypes.Bool   `json:"is_dst" PointUpdateFreq:"UpdateFreqInstant"`
 		TimeZone valueTypes.String `json:"time_zone" PointUpdateFreq:"UpdateFreqInstant"`
-	}       `json:"psTimezoneInfo" PointId:"ps_timezone_info"`
+	} `json:"psTimezoneInfo" PointId:"ps_timezone_info"`
 }
 
 type PointStruct struct {
-	GoStruct               GoStruct.GoStruct   `json:"-" PointIdFrom:"PointId" PointIdReplace:"true" PointTimestampFrom:"TimeStamp" PointDeviceFromParent:"PsKey"`
+	GoStruct GoStruct.GoStruct `json:"-" PointIdFrom:"PointId" PointIdReplace:"true" PointTimestampFrom:"TimeStamp" PointDeviceFromParent:"PsKey"`
 	// GoStruct               GoStruct.GoStruct   `json:"-" PointDeviceFromParent:"PsKey"`
 
-	TimeStamp              valueTypes.DateTime `json:"time_stamp" PointUpdateFreq:"UpdateFreq5Mins" PointNameDateFormat:"DateTimeLayout"`
-	PointId                valueTypes.PointId  `json:"point_id" PointUpdateFreq:"UpdateFreqBoot"`
-	PointName              valueTypes.String   `json:"point_name" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	Value                  valueTypes.Float    `json:"value" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUnitFrom:"Unit" PointVariableUnit:"true" PointUpdateFreq:"UpdateFreq5Mins"`
-	PointSign              valueTypes.String   `json:"point_sign" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	Unit                   valueTypes.String   `json:"unit" PointUpdateFreq:"UpdateFreqBoot"`
-	ValueDescription       valueTypes.String   `json:"value_description" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	OrderId                valueTypes.Integer  `json:"order_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	PointGroupId           valueTypes.Integer  `json:"point_group_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	PointGroupName         valueTypes.String   `json:"point_group_name" PointUpdateFreq:"UpdateFreqBoot"`
-	Relate                 valueTypes.Integer  `json:"relate" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
-	CodeId                 valueTypes.Integer  `json:"code_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	TimeStamp        valueTypes.DateTime `json:"time_stamp" PointUpdateFreq:"UpdateFreq5Mins" PointNameDateFormat:"DateTimeLayout"`
+	PointId          valueTypes.PointId  `json:"point_id" PointUpdateFreq:"UpdateFreqBoot"`
+	PointName        valueTypes.String   `json:"point_name" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	Value            valueTypes.Float    `json:"value" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUnitFrom:"Unit" PointVariableUnit:"true" PointUpdateFreq:"UpdateFreq5Mins"`
+	PointSign        valueTypes.String   `json:"point_sign" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	Unit             valueTypes.String   `json:"unit" PointUpdateFreq:"UpdateFreqBoot"`
+	ValueDescription valueTypes.String   `json:"value_description" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	OrderId          valueTypes.Integer  `json:"order_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	PointGroupId     valueTypes.Integer  `json:"point_group_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	PointGroupName   valueTypes.String   `json:"point_group_name" PointUpdateFreq:"UpdateFreqBoot"`
+	Relate           valueTypes.Integer  `json:"relate" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
+	CodeId           valueTypes.Integer  `json:"code_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
 
 	CodeIdOrderId          valueTypes.String   `json:"code_id_order_id" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
 	CodeName               valueTypes.String   `json:"code_name" PointGroupNameFrom:"PointGroupName" PointTimestampFrom:"TimeStamp" PointUpdateFreq:"UpdateFreqBoot"`
@@ -325,7 +326,6 @@ func (e *EndPoint) SetBatteryPoints(epp GoStruct.EndPointPath, entries api.DataM
 		_ = entries.MakeState(batteryPowerActive)
 		batteryPowerActive.DataStructure.PointUpdateFreq = GoStruct.UpdateFreq5Mins
 
-
 		// /////////////////////////////////////////////////////// //
 		batteryDischargeEnergy := entries.CopyPointFromName(epp.AddString("p13029"), epp, "battery_discharge_energy", "Battery Discharge Energy (p13029)")
 		// batteryDischargeEnergy.DataStructure.PointIcon = "mdi:battery"
@@ -351,7 +351,6 @@ func (e *EndPoint) SetBatteryPoints(epp GoStruct.EndPointPath, entries api.DataM
 		batteryChargeEnergyPercent.SetValue(entries.GetPercent(batteryChargeEnergy, dailyPvEnergy, 1))
 		batteryChargeEnergyPercent.SetUnit("%")
 		// batteryChargeEnergyPercent.DataStructure.PointIcon = "mdi:battery"
-
 
 		// /////////////////////////////////////////////////////// //
 		batteryToLoadPower := entries.CopyPoint(batteryDischargePower, epp, "battery_to_load_power", "Battery To Load Power (Calc)")
@@ -478,7 +477,15 @@ func (e *EndPoint) SetGridPoints(epp GoStruct.EndPointPath, entries api.DataMap)
 		gridToLoadEnergy := entries.CopyPointFromName(epp.AddString("p13147"), epp, "grid_to_load_energy", "Grid To Load Energy (p13147)")
 		gridToLoadEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
 
-		totalLoadEnergy := entries.CopyPointFromName(epp.AddString("p13199"), epp, "total_load_energy", "Total Load Energy (Calc)")
+		pvToLoadEnergy := entries.CopyPointFromName(epp.AddString("p13116"), epp, "pv_to_load_energy", "Pv To Load Energy (p13116)")
+		pvToLoadEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
+		tmp2 := pvToLoadEnergy.GetValueFloat() + gridToLoadEnergy.GetValueFloat()
+
+		totalLoadEnergy := entries.CopyPoint(gridToLoadEnergy, epp, "total_load_energy", "Total Load Energy (Calc)")
+		totalLoadEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
+		totalLoadEnergy.SetValue(tmp2)
+		totalLoadEnergy.SetValuePrecision(3)
+
 		gridToLoadEnergyPercent := entries.CopyPoint(totalLoadEnergy, epp, "grid_to_load_energy_percent", "")
 		gridToLoadEnergyPercent.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
 		gridToLoadEnergyPercent.SetValue(entries.GetPercent(gridToLoadEnergy, totalLoadEnergy, 1))
@@ -507,8 +514,18 @@ func (e *EndPoint) SetGridPoints(epp GoStruct.EndPointPath, entries api.DataMap)
 func (e *EndPoint) SetLoadPoints(epp GoStruct.EndPointPath, entries api.DataMap) {
 	for range Only.Once {
 		// Daily Load Energy Consumption
-		dailyTotalEnergy := entries.CopyPointFromName(epp.AddString("p13199"), epp, "daily_total_energy", "Daily Total Energy (p13199)")
+
+		gridToLoadEnergy := entries.CopyPointFromName(epp.AddString("p13147"), epp, "grid_to_load_energy", "Grid To Load Energy (p13147)")
+		gridToLoadEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
+
+		pvToLoadEnergy := entries.CopyPointFromName(epp.AddString("p13116"), epp, "pv_to_load_energy", "Pv To Load Energy (p13116)")
+		pvToLoadEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
+		tmp2 := pvToLoadEnergy.GetValueFloat() + gridToLoadEnergy.GetValueFloat()
+
+		dailyTotalEnergy := entries.CopyPoint(gridToLoadEnergy, epp, "daily_total_energy", "Daily Total Energy (Calc)")
 		dailyTotalEnergy.DataStructure.PointUpdateFreq = GoStruct.UpdateFreqDay
+		dailyTotalEnergy.SetValue(tmp2)
+		dailyTotalEnergy.SetValuePrecision(3)
 
 		// Total Load Energy Consumption
 		// _ = entries.CopyPointFromName(epp.AddString("p13130"), epp, "total_energy_consumption", "")
